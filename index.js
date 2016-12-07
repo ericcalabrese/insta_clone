@@ -2,7 +2,8 @@ var Sequelize = require('sequelize');
 var express = require('express');
 var bodyParser = require('body-parser');
 var multer = require('multer');
-var upload = multer({dest: 'uploads'});
+var upload = multer({dest : 'public/uploads'});
+var fs = require('fs');
 
 var app = express();
 
@@ -12,13 +13,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var port = process.env.PORT || 3000;
 
-var dbFileName = "insta.db";
+var dbFileName = "fakestagram.db";
 var devDbUrl = "sqlite://" + dbFileName;
 var sequelize = new Sequelize(devDbUrl);
 
-var InstaPost = sequelize.define('InstaPost', {
+var InstaPost = sequelize.define("InstaPost", {
 	title: Sequelize.STRING,
-	comment: Sequelize.TEXT
+	comment: Sequelize.TEXT,
+	imageID: Sequelize.INTEGER,
+	postID: Sequelize.INTEGER
 });
 
 app.get('/insta', function(req, res) {
@@ -33,25 +36,30 @@ app.get('/upload', function(req, res){
 	})
 });
 
-app.post('/upload', upload.single('file-to-upload'), 
-	function(req, res){InstaPost.create(req.body)
-		.then(function(instaPost){
+app.post('/upload', upload.single('file-to-upload'), function(req, res){
+	console.log(req.body);
+	console.log(req.file);
+	var eric = { 
+		title: req.body.title,
+		imageID: req.file.filename
+	}
+
+	InstaPost.create(eric).then(
+	function(instaPost){
 		res.redirect('/insta');
 	})
-});
 
-app.post('/upload', upload.single('file-to-upload'), 
-	function(req, res){
-		console.log(req.file);
-
-
-		var uploadedFile = req.file.path;
-		var newLocation = `${req.file.destination}
-		/${req.file.originalname}`;
- 		fs.rename(uploadedFile, newLocation, 
- 			function() {
-  			res.send(`Saved to ${newLocation}.`);
-  	})
+	/*
+// Path given by Multer
+	var uploadedFile = req.file.path;
+	// Path we want it go
+	var newLocation = `${req.file.destination}/${req.file.originalname}`;
+ 	fs.rename(uploadedFile, newLocation, 
+ 		function() {
+  		 	//res.send(`Saved to ${newLocation}.`);
+ 			res.redirect('/insta');
+		})
+	*/
 });
 
 
