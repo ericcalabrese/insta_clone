@@ -19,10 +19,18 @@ var sequelize = new Sequelize(devDbUrl);
 
 var InstaPost = sequelize.define("InstaPost", {
 	title: Sequelize.STRING,
-	comment: Sequelize.TEXT,
-	imageID: Sequelize.INTEGER,
-	postID: Sequelize.INTEGER
+	imageID: Sequelize.INTEGER
 });
+
+var Comment = sequelize.define("Comment", {
+	comment: {
+		type: Sequelize.TEXT,
+		allowNull: false
+	}
+});
+
+Comment.belongsTo(InstaPost);
+InstaPost.hasMany(Comment);
 
 app.get('/insta', function(req, res) {
 	InstaPost.findAll().then(function(instaPost){
@@ -39,15 +47,43 @@ app.get('/upload', function(req, res){
 app.post('/upload', upload.single('file-to-upload'), function(req, res){
 	console.log(req.body);
 	console.log(req.file);
-	var eric = { 
+	var full = { 
 		title: req.body.title,
 		imageID: req.file.filename
 	}
 
-	InstaPost.create(eric).then(
+	InstaPost.create(full).then(
 	function(instaPost){
 		res.redirect('/insta');
+	});
+})
+
+
+app.post('/posts/:imageID/comments', function(req, res){
+	console.log("got the post");
+	console.log(req.params.imageID);
+	InstaPost.findById(req.params.imageID).
+	then(function(row){
+
+		if (!row) {
+			res.status(404).send("Could not find that post");
+			return;
+		}
+
+		console.log("found row");
+		console.log(row);
+		row.createComment({
+			comment: req.body.comment,
+		}).
+		then(
+			res.send("Done!"))
 	})
+	// Comment.create(req.body.comment).then(
+	// 	function(comment){
+	// 	});
+	// 	res.redirect('/insta');
+
+});
 
 	/*
 // Path given by Multer
@@ -60,7 +96,7 @@ app.post('/upload', upload.single('file-to-upload'), function(req, res){
  			res.redirect('/insta');
 		})
 	*/
-});
+
 
 
 

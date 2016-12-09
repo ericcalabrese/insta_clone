@@ -2,15 +2,20 @@
 <div>
 	<h2><%= post[i].title %></h2>
 </div>
-<div> 
-	<p> <%= post[i].comment %> </p>
-</div>
 <div>
 	<img src="uploads/<%=post[i].imageID %>" /> 
 </div>
-<form>
-
+<div> 
+	<p> <%= post[i].comment %> </p>
+</div>
+<form action="/posts/<%= post[i].id %>/comments" method="post">
+	<div> 
+		<h4>Comment</h4>
+		<input id='comment' type='text' name='comment'>
+		<input type="submit" />
+	</div>
 </form>
 <% } %>
 
 <a href="/upload">Write</a> 
+
