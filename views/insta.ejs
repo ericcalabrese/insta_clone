@@ -5,9 +5,9 @@
 <div>
 	<img src="uploads/<%=post[i].imageID %>" /> 
 </div>
-<div> 
-	<p> <%= post[i].comment %> </p>
-</div>
+
+
+
 <form action="/posts/<%= post[i].id %>/comments" method="post">
 	<div> 
 		<h4>Comment</h4>
@@ -15,6 +15,14 @@
 		<input type="submit" />
 	</div>
 </form>
+
+	<% post[i].Comments.forEach(function(item) { %>
+	<div> 
+		<p> <%= item.comment %> </p>
+		
+	</div>
+	<% })%>
+
 <% } %>
 
 <a href="/upload">Write</a> 

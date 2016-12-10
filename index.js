@@ -33,10 +33,20 @@ Comment.belongsTo(InstaPost);
 InstaPost.hasMany(Comment);
 
 app.get('/insta', function(req, res) {
-	InstaPost.findAll().then(function(instaPost){
-		res.render('insta', {post: instaPost});
+	InstaPost.findAll({
+		include:[{
+			model: Comment
+		}]
 	})
+	.then(function(instaPost){
+		res.render('insta', {post: instaPost});
+	});
 });
+
+// InstaPost.findAll().then(Comment.findAll()).
+// 	then(function(instaPost, comment){
+// 		res.render('insta', {post: instaPost}, {comment: comment});
+// 	});
 
 app.get('/upload', function(req, res){
 	InstaPost.findAll().then(function(instaPost){
@@ -75,9 +85,12 @@ app.post('/posts/:imageID/comments', function(req, res){
 		row.createComment({
 			comment: req.body.comment,
 		}).
-		then(
-			res.send("Done!"))
+		then(function(comment){
+			// res.send("Done!")
+			res.redirect('/insta')
+		})
 	})
+
 	// Comment.create(req.body.comment).then(
 	// 	function(comment){
 	// 	});
