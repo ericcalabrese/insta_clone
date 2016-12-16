@@ -43,11 +43,6 @@ app.get('/insta', function(req, res) {
 	});
 });
 
-// InstaPost.findAll().then(Comment.findAll()).
-// 	then(function(instaPost, comment){
-// 		res.render('insta', {post: instaPost}, {comment: comment});
-// 	});
-
 app.get('/upload', function(req, res){
 	InstaPost.findAll().then(function(instaPost){
 		res.render('upload');
@@ -69,10 +64,10 @@ app.post('/upload', upload.single('file-to-upload'), function(req, res){
 })
 
 
-app.post('/posts/:imageID/comments', function(req, res){
-	console.log("got the post");
-	console.log(req.params.imageID);
-	InstaPost.findById(req.params.imageID).
+app.post('/posts/:id/comments', function(req, res){
+	// console.log("got the post");
+	// console.log(req.params.imageID);
+	InstaPost.findById(req.params.id).
 	then(function(row){
 
 		if (!row) {
@@ -80,8 +75,8 @@ app.post('/posts/:imageID/comments', function(req, res){
 			return;
 		}
 
-		console.log("found row");
-		console.log(row);
+		// console.log("found row");
+		// console.log(row);
 		row.createComment({
 			comment: req.body.comment,
 		}).
@@ -90,12 +85,32 @@ app.post('/posts/:imageID/comments', function(req, res){
 			res.redirect('/insta')
 		})
 	})
+});
 
-	// Comment.create(req.body.comment).then(
-	// 	function(comment){
-	// 	});
-	// 	res.redirect('/insta');
+app.post('/posts/:id', upload.single('file-to-upload'), 
+function(req, res){
+	InstaPost.findById(req.params.id).
+	then(function(row){
 
+		if (!row) {
+			res.status(404).send("Could not find that post");
+			return;
+		}
+
+		var data = {
+			title: req.body.title
+		};
+
+		if (req.file) {
+			data.imageID = req.file.filename;
+		}
+
+		row.update(data).
+		then(function(title){
+			// res.send("Done!")
+			res.redirect('/insta')
+		})
+	})
 });
 
 	/*
@@ -109,8 +124,6 @@ app.post('/posts/:imageID/comments', function(req, res){
  			res.redirect('/insta');
 		})
 	*/
-
-
 
 
 sequelize.sync().then(function() {

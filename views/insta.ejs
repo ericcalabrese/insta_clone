@@ -2,11 +2,18 @@
 <div>
 	<h2><%= post[i].title %></h2>
 </div>
+<form action="/posts/<%= post[i].id %>" method="post" enctype="multipart/form-data">
+	<div> 
+		<input id='title' type='text' name='title' value='<%= post[i].title %>'>
+		<input type="file" name="file-to-upload" />
+		<input type="submit" value="Edit"/>
+	</div>
+</form>
+
+
 <div>
-	<img src="uploads/<%=post[i].imageID %>" /> 
+	<img src="uploads/<%=post[i].imageID %>" />
 </div>
-
-
 
 <form action="/posts/<%= post[i].id %>/comments" method="post">
 	<div> 
@@ -15,15 +22,15 @@
 		<input type="submit" />
 	</div>
 </form>
-
-	<% post[i].Comments.forEach(function(item) { %>
+<div>
+	<% post[i].Comments.forEach(function(item) { %>	
+</div>	
 	<div> 
 		<p> <%= item.comment %> </p>
-		
+		<button type="button">Delete</button>
 	</div>
 	<% })%>
 
 <% } %>
 
-<a href="/upload">Write</a> 
-
+<a href="/upload">Write</a>
