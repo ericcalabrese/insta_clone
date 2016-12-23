@@ -50,8 +50,8 @@ app.get('/upload', function(req, res){
 });
 
 app.post('/upload', upload.single('file-to-upload'), function(req, res){
-	console.log(req.body);
-	console.log(req.file);
+	//console.log(req.body);
+	//console.log(req.file);
 	var full = { 
 		title: req.body.title,
 		imageID: req.file.filename
@@ -108,10 +108,73 @@ function(req, res){
 		row.update(data).
 		then(function(title){
 			// res.send("Done!")
+			//console.log(title);
+
 			res.redirect('/insta')
 		})
 	})
 });
+
+app.post('/posts/:id/delete', function(req, res){
+	InstaPost.findById(req.params.id).
+	then(function(row){
+
+		if (!row) {
+			res.status(404).send("Could not find that post");
+			return;
+		}
+
+		row.destroy(
+		// {
+		// 	title: req.body.title,
+		// 	imageID: req.file.filename,
+		//     comment: req.body.comment,
+		// }
+		).then(function(deleted){
+			res.redirect('/insta')
+		})
+	})
+});
+
+/*
+'/posts/:post_id/comments/:comment_id/delete' =>
+'/posts/123/comments/456'
+req.params = {
+	post_id: "123",
+	comment_id: "456"
+}
+req.params.Comments
+*/
+
+app.post('/posts/:post_id/comments/:comment_id/delete', function(req, res){
+	// Comment.findById(req.params.id).
+	// then(function(row){
+
+	// 	if (!row) {
+	// 		res.status(404).send("Could not find that post");
+	// 		return;
+	// 	}
+
+	// 	comment.id.InstaPostId.destroy().
+	// 	then(function(delete_c){
+	// 		console.log("Eric is cool");
+	// 		console.log(delete_c);
+	// 		res.redirect('/insta')
+	// 	})
+	// })
+	Comment.destroy({
+		where:{
+			//undefined.id
+			id: req.params.comment_id
+		}
+	}).then(function(delete_c){
+			console.log("Eric is cool");
+	 		console.log(delete_c);
+	 		res.redirect('/insta')
+ 	})
+
+});
+
 
 	/*
 // Path given by Multer
