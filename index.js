@@ -32,7 +32,7 @@ var Comment = sequelize.define("Comment", {
 Comment.belongsTo(InstaPost);
 InstaPost.hasMany(Comment);
 
-app.get('/insta', function(req, res) {
+app.get('/', function(req, res) {
 	InstaPost.findAll({
 		include:[{
 			model: Comment
@@ -59,7 +59,7 @@ app.post('/upload', upload.single('file-to-upload'), function(req, res){
 
 	InstaPost.create(full).then(
 	function(instaPost){
-		res.redirect('/insta');
+		res.redirect('/');
 	});
 })
 
@@ -82,7 +82,7 @@ app.post('/posts/:id/comments', function(req, res){
 		}).
 		then(function(comment){
 			// res.send("Done!")
-			res.redirect('/insta')
+			res.redirect('/')
 		})
 	})
 });
@@ -110,7 +110,7 @@ function(req, res){
 			// res.send("Done!")
 			//console.log(title);
 
-			res.redirect('/insta')
+			res.redirect('/')
 		})
 	})
 });
@@ -131,7 +131,7 @@ app.post('/posts/:id/delete', function(req, res){
 		//     comment: req.body.comment,
 		// }
 		).then(function(deleted){
-			res.redirect('/insta')
+			res.redirect('/')
 		})
 	})
 });
@@ -170,7 +170,7 @@ app.post('/posts/:post_id/comments/:comment_id/delete', function(req, res){
 	}).then(function(delete_c){
 			console.log("Eric is cool");
 	 		console.log(delete_c);
-	 		res.redirect('/insta')
+	 		res.redirect('/')
  	})
 
 });
