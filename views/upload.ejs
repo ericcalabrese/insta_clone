@@ -10,41 +10,45 @@
 
 <body>
 
-<div>
-	<nav>
-		<ul class="myNavbar">
-		  <li><a href="/insta"><img id="logoSize" src="../img/instaLogo.png"></a></li>
-		  <li><input id="searchSize" type='text' name='search' placeholder="Search">
-		  <li ><a href="/upload"><img class="instaSize" src="../img/insta.png"></li></a>
-		  <li ><a href="mailto:calabrese.eric@gmail.com"><img class="emailSize" src="../img/email.png"></li></a>
-		</ul> 
-	</nav>    
+<nav>
+	<ul class="myNavbar">
+	  <li><a href="/insta"><img id="logoSize" src="../img/instaLogo.png"></a></li>
+	  <li><input id="searchSize" type='text' name='search' placeholder="Search" size="30">
+	  <li ><a href="/upload"><img class="instaSize" src="../img/insta.png"></li></a>
+	  <li ><a href="mailto:calabrese.eric@gmail.com"><img class="emailSize" src="../img/email.png"></li></a>
+	</ul> 
+</nav>    
 
-    <div  class="screen container-fluid">
-    	<div class="row">
-	    	<div class="col-xs-12 col-md-6 col-md-offset-3">
-	    		<div class="post panel panel-default">
-	    			
-					<form action="/upload" method="post" enctype="multipart/form-data">
-						<input type="file" name="file-to-upload" />
-
-						<div> 
-							<h4>Title</h4>
-							<input id='title' type='text' name='title'>
+<div  class="screen uploadScreen container-fluid">
+    <div class="row">
+    	<div class="col-xs-12 col-md-6 col-md-offset-3">
+	   		<div class="post panel panel-default">
+	    		<div class="upload uploadFile">
+					<form action="/upload" method="post" enctype="multipart/form-data">	
+						<div class="uploadFile">
+							<input type="file" name="file-to-upload" />
 						</div>
-						<div>
+						<div class="uploadTitle">
+							<input id='title' type='text' name='title' placeholder="Add a title..">
+						</div>
+						<div class="uploadButton">	
 							<input type="submit" />
 						</div>
 					</form>
-
-					<a href="/insta">Insta</a> 
-
 				</div>
-			</div>	
-		</div>
+			</div>
+		</div>	
 	</div>
 </div>
 
+<footer>
+	<ul class="footer">
+	  <li ><a href="https://github.com/ericcalabrese"><img class="footerSize" src="../img/github.png"></li></a>
+	  <li ><a href="https://www.linkedin.com/in/eric-calabrese-b6478557/"><img class="footerSize" src="../img/linkedin.png"></li></a>
+	  <!-- <li ><a href="mailto:calabrese.eric@gmail.com"><img class="footerEmail" src="../img/email.png"></li></a> -->
+	  <li class="copyright"><p>Copyright &copy; Eric Calabrese 2017</p></li>
+	</ul> 
+</footer>
 	<script src="../styles/jquery-3.2.0.min.js"></script>
 	<script src="../styles/bootstrap.min.js"></script>
 

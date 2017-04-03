@@ -35,6 +35,7 @@
 @media only screen and (max-width: 600px) {
   #searchSize { display: none; } 
   .screen { margin-top: 13%; }
+  .copyright { top: 90% }
 }
 input {
     border-radius: 5px;
@@ -60,9 +61,6 @@ input {
     height: 480px;
     width: 100%;  
     margin-bottom: 2%; 
-}
-.postSpace {
-    margin-top: 8%;
 }
 .title {
     margin-left: 2%;
@@ -104,4 +102,21 @@ input {
 .copyright {
     position: absolute;
     bottom: -30%;
+}
+.upload {
+    display: flex;
+    justify-content: center;
+}
+.uploadTitle {
+    margin-top: 8%;
+}
+.uploadButton {
+    margin-top: 4%;
+
+}
+.uploadFile {
+    margin-top: 2%;
+}
+.uploadScreen {
+    height: 86%;
 }

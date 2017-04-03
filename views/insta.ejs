@@ -15,7 +15,7 @@
 	  <li><a href="/insta"><img id="logoSize" src="../img/instaLogo.png"></a></li>
 	  <li><input id="searchSize" type='text' name='search' placeholder="Search" size="30">
 	  <li ><a href="/upload"><img class="instaSize" src="../img/insta.png"></li></a>
-	  <li ><a href="mailto:calabrese.eric@gmail.com"><img class="emailSize" src="../img/email.png"></li></a
+	  <li ><a href="mailto:calabrese.eric@gmail.com"><img class="emailSize" src="../img/email.png"></li></a>
 	</ul> 
 </nav>    
 
@@ -25,20 +25,20 @@
 		<div class="col-xs-12 col-md-6 col-md-offset-3">
 	    	<div class="post panel panel-default">
 				<div class="panel-heading">
-	    			<button class="edit" type="button" data-toggle="modal" data-target="#myModal">
+	    			<button class="edit" type="submit" value="Edit" data-toggle="modal" data-target="#myModal">
 	    				<span class="glyphicon glyphicon-edit ">
 	    				</span>
 	    			</button>
 					<form action="/posts/<%= post[i].id %>/delete" method="post">
 							<!-- <input class="edit" type="submit" name="delete" value="Delete"/> -->
-						<button class="delete" type="button" value="delete">
+						<button class="delete" type="submit" value="delete">
 	    					<span class="glyphicon glyphicon-remove">
 	    					</span>
 	    				</button>
 					</form>
 	    		</div>
 				<div class="title">
-					<h2><%= post[i].title %></h2>
+					<h3><%= post[i].title %></h3>
 				</div>
 				<img src="uploads/<%=post[i].imageID %>" />
 				<div class="comment">
@@ -48,9 +48,6 @@
 					</form>
 				</div>
 				<% post[i].Comments.forEach(function(comment) { %>	
-						<!-- <div class="comment">
-							<p> <%= comment.comment %> </p>
-						</div> -->
 				<form action="/posts/<%= post[i].id %>/comments/<%= comment.id %>/delete" method="post"> 
 							<!-- <input type="submit" name="delete_c" value="Delete"/> -->
 					<div class="comments">
@@ -83,17 +80,16 @@
 					    </div>
 					</div>
 				</div>
-					<% })%>
+				<% })%>
 			</div>
 		</div>	
 	</div>
-	<% }  %>
+	<% } %>
 </div>
 <footer>
 	<ul class="footer">
 	  <li ><a href="https://github.com/ericcalabrese"><img class="footerSize" src="../img/github.png"></li></a>
 	  <li ><a href="https://www.linkedin.com/in/eric-calabrese-b6478557/"><img class="footerSize" src="../img/linkedin.png"></li></a>
-	  <!-- <li ><a href="mailto:calabrese.eric@gmail.com"><img class="footerEmail" src="../img/email.png"></li></a> -->
 	  <li class="copyright"><p>Copyright &copy; Eric Calabrese 2017</p></li>
 	</ul> 
 </footer>
