@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": "6.9.4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ericcalabrese/insta_clone.git"
@@ -22,7 +25,6 @@
     "express": "^4.14.0",
     "fs": "0.0.1-security",
     "multer": "^1.2.0",
-    "node": "6.9.4",
     "pg": "^6.1.0",
     "sequelize": "^3.27.0",
     "sqlite3": "^3.1.8"
