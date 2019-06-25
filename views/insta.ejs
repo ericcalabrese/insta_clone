@@ -5,97 +5,106 @@
  
    <link rel="stylesheet" href="../styles/insta.css">
    <link rel="stylesheet" href="../styles/bootstrap.min.css">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
-
 <body>
+	<div class="instaContainer">
+		<div class="navCell logo">
+			<a href="/">
+				<i class="fa fa-instagram"></i>
+				<img style="height:35px;width:80px;margin-left:5px;" src="../img/instaLogoTrans.png">
+			</a>
+		</div>
+		<div class="navCell">
+			<div class="searchContainer">
+				<input type='text' name='search' placeholder="Search">
+			</div>
+		</div>
+		<div class="navCell faLinks">
+			<a href="/">
+				<i class="fa fa-instagram"></i>
+			</a>
+		</div>
+		<div class="navCell faLinks">
+			<a href="/">
+				<i class="fa fa-envelope-o"></i>
+			</a>
+		</div>
+	</div>  
+	<div  class="screen">
+	    <% for (var i=0; i<post.length; i++) { %>
 
-<nav>
-	<ul class="myNavbar">
-	  <li><a href="/"><img id="logoSize" src="../img/instaLogo.png"></a></li>
-	  <li><input id="searchSize" type='text' name='search' placeholder="Search" size="30">
-	  <li ><a href="/upload"><img class="instaSize" src="../img/insta.png"></li></a>
-	  <li ><a href="mailto:calabrese.eric@gmail.com"><img class="emailSize" src="../img/email.png"></li></a>
-	</ul> 
-</nav>    
-
-<div  class="screen container-fluid">
-    <% for (var i=0; i<post.length; i++) { %>
-    <div class="row">
-		<div class="col-xs-12 col-md-6 col-md-offset-3">
-	    	<div class="post panel panel-default">
-				<div class="panel-heading">
-	    			<button class="edit" type="submit" value="Edit" data-toggle="modal" data-target="#myModal">
-	    				<span class="glyphicon glyphicon-edit ">
-	    				</span>
-	    			</button>
-					<form action="/posts/<%= post[i].id %>/delete" method="post">
-							<!-- <input class="edit" type="submit" name="delete" value="Delete"/> -->
-						<button class="delete" type="submit" value="delete">
-	    					<span class="glyphicon glyphicon-remove">
-	    					</span>
-	    				</button>
-					</form>
-	    		</div>
-				<div class="title">
-					<h3><%= post[i].title %></h3>
-				</div>
-				<img src="uploads/<%=post[i].imageID %>" />
-				<div class="comment">
-					<form action="/posts/<%= post[i].id %>/comments" method="post">
-						<input id='comment' type='text' name='comment' placeholder="Add a comment..." size="60">
-						<input id="commentButton" type="submit" />
-					</form>
-				</div>
-				<% post[i].Comments.forEach(function(comment) { %>	
-				<form action="/posts/<%= post[i].id %>/comments/<%= comment.id %>/delete" method="post"> 
-							<!-- <input type="submit" name="delete_c" value="Delete"/> -->
-					<div class="comments">
-						<p> <%= comment.comment %> </p>
-					
+    	<div class="post panel panel-default">
+			<div class="title">
+				<h3><%= post[i].title %></h3>
+			</div>
+			<div class="instaControls">
+    			<button class="edit" type="submit" value="Edit" data-toggle="modal" data-target="#myModal<%= post[i].id %>" bns-postid="/posts<%= post[i].id %>">
+    				<span class="glyphicon glyphicon-edit ">
+    				</span>
+    			</button>
+				<form action="/posts/<%= post[i].id %>/delete" method="post">
+					<button class="delete" type="submit" value="delete">
+    					<span class="glyphicon glyphicon-remove">
+    					</span>
+    				</button>
+				</form>
+    		</div>
+			<img src="uploads/<%=post[i].imageID %>" />
+			<div class="comment">
+				<form action="/posts/<%= post[i].id %>/comments" method="post">
+					<input class="commentInput" type='text' name='comment' placeholder="Add a comment..." size="60">
+					<input id="commentButton" type="submit" />
+				</form>
+			</div>
+			<% post[i].Comments.forEach(function(comment) { %>
+			<form action="/posts/<%= post[i].id %>/comments/<%= comment.id %>/delete" method="post"> 
+				<div class="comments">
+					<p> <%= comment.comment %> </p>
 					<button class="deleteC" type="submit" name="delete_c" value="Delete">
 		    			<span class="glyphicon glyphicon-remove">
 		    			</span>
 		    		</button>
-		    		</div>
-				</form>
-
-				<div id="myModal" class="modal fade" role="dialog">
-  					<div class="modal-dialog">
-					    <div class="modal-content">
-					      	<div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal">&times;</button>
-						        <h4 class="modal-title">Modal Header</h4>
-						    </div>
-						    <div class="modal-body">
-								<form action="/posts/<%= post[i].id %>" method="post" enctype="multipart/form-data">
-									<input id='title' type='text' name='title' value='<%= post[i].title %>'>
-									<input type="file" name="file-to-upload" />
-									<input type="submit" value="Edit"/>
-								</form>				    
-							</div>
-						    <div class="modal-footer">
-						    	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						    </div>
+	    		</div>
+			</form>
+			<% })%>
+			<div id="myModal<%= post[i].id %>" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+				    <div class="modal-content">
+				      	<div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title">Modal Header</h4>
 					    </div>
-					</div>
+					    <div class="modal-body">
+							<form action="/posts/<%= post[i].id %>" method="post" enctype="multipart/form-data">
+								<input id='title' type='text' name='title' value='<%= post[i].title %>'>
+								<input type="file" name="file-to-upload" />
+								<input type="submit" value="Edit"/>
+							</form>				    
+						</div>
+					    <div class="modal-footer">
+					    	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					    </div>
+				    </div>
 				</div>
-				<% })%>
 			</div>
-		</div>	
+		</div>
+		<% } %>
 	</div>
-	<% } %>
-</div>
-<footer>
-	<ul class="footer">
-	  <li ><a href="https://github.com/ericcalabrese"><img class="footerSize" src="../img/github.png"></li></a>
-	  <li ><a href="https://www.linkedin.com/in/eric-calabrese-b6478557/"><img class="footerSize" src="../img/linkedin.png"></li></a>
-	  <li class="copyright"><p>Copyright &copy; Eric Calabrese 2017</p></li>
-	</ul> 
-</footer>
+	<footer>
+		<div class="footerFonts">
+			<a href="https://github.com/ericcalabrese">
+		  		<i class="fa fa-github"></i>
+		  	</a>
+		  	<a href="https://www.linkedin.com/in/eric-calabrese-b6478557/">
+		  		<i class="fa fa-linkedin-square"></i>
+		  	</a>
+		</div>
+		<p>Copyright &copy; Eric Calabrese 2019</p>
+	</footer>
 
 	<script src="../styles/jquery-3.2.0.min.js"></script>
 	<script src="../styles/bootstrap.min.js"></script>
-
 </body>
 </html>
